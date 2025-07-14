@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Left Navigation Panel */
+        .nav-panel {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, width 0.3s ease;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .nav-panel.collapsed {
+            width: 60px;
+        }
+
+        .nav-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(103, 126, 234, 0.1);
+        }
+
+        .nav-header h1 {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: 700;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-panel.collapsed .nav-header h1 {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #667eea;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            background: rgba(103, 126, 234, 0.1);
+            transform: scale(1.1);
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background: rgba(103, 126, 234, 0.1);
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: rgba(103, 126, 234, 0.2);
+            border-left-color: #667eea;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .nav-item-icon {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            min-width: 20px;
+        }
+
+        .nav-item-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-panel.collapsed .nav-item-text {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-panel.collapsed .nav-item {
+            justify-content: center;
+            padding: 15px 20px;
+        }
+
+        .nav-panel.collapsed .nav-item-icon {
+            margin-right: 0;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 30px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb {
+            font-size: 1.1rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .search-bar {
+            padding: 8px 15px;
+            border: 2px solid rgba(103, 126, 234, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            outline: none;
+            transition: all 0.3s ease;
+            width: 250px;
+        }
+
+        .search-bar:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(103, 126, 234, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .profile-header p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            padding: 10px 20px;
+            background: rgba(103, 126, 234, 0.1);
+            border-radius: 25px;
+            text-decoration: none;
+            color: #667eea;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(103, 126, 234, 0.3);
+        }
+
+        /* Project Cards */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            background: rgba(103, 126, 234, 0.1);
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .project-link:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(103, 126, 234, 0.3);
+        }
+
+        /* Blog Posts */
+        .blog-post {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-post h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .blog-meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #5a6fd8;
+            text-decoration: underline;
+        }
+
+        /* About Section */
+        .about-content {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .about-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill-category {
+            background: rgba(103, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .skill-category h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .skill-category ul {
+            list-style: none;
+            color: #666;
+        }
+
+        .skill-category li {
+            padding: 5px 0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-panel {
+                position: fixed;
+                height: 100vh;
+                z-index: 1000;
+                transform: translateX(-100%);
+            }
+
+            .nav-panel.open {
+                transform: translateX(0);
+            }
+
+            .nav-panel.collapsed {
+                width: 280px;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .top-bar {
+                padding: 15px 20px;
+            }
+
+            .search-bar {
+                width: 200px;
+            }
+
+            .profile-header {
+                padding: 30px 20px;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Navigation Panel -->
+        <nav class="nav-panel" id="navPanel">
+            <div class="nav-header">
+                <h1>Portfolio</h1>
+                <button class="nav-toggle" id="navToggle">☰</button>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="about">
+                    <span class="nav-item-icon">👤</span>
+                    <span class="nav-item-text">About</span>
+                </div>
+                <div class="nav-item" data-section="projects">
+                    <span class="nav-item-icon">🚀</span>
+                    <span class="nav-item-text">Projects</span>
+                </div>
+                <div class="nav-item" data-section="blog">
+                    <span class="nav-item-icon">📝</span>
+                    <span class="nav-item-text">Blog</span>
+                </div>
+                <div class="nav-item" data-section="contact">
+                    <span class="nav-item-icon">📧</span>
+                    <span class="nav-item-text">Contact</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="breadcrumb" id="breadcrumb">About</div>
+                <input type="text" class="search-bar" placeholder="Search...">
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- About Section -->
+                <section id="about" class="content-section active">
+                    <div class="profile-header">
+                        <div class="profile-image">YN</div>
+                        <h1>Your Name</h1>
+                        <p>Full Stack Developer & Designer</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">GitHub</a>
+                            <a href="#" class="social-link">LinkedIn</a>
+                            <a href="#" class="social-link">Twitter</a>
+                        </div>
+                    </div>
+                    <div class="about-content">
+                        <h2>About Me</h2>
+                        <p>Welcome to my digital space! I'm a passionate developer with expertise in creating innovative solutions and beautiful user experiences. With a strong foundation in both front-end and back-end technologies, I enjoy building applications that make a difference.</p>
+                        <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through blog posts and tutorials.</p>
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <h4>Frontend</h4>
+                                <ul>
+                                    <li>React / Next.js</li>
+                                    <li>Vue.js</li>
+                                    <li>TypeScript</li>
+                                    <li>CSS / Sass</li>
+                                </ul>
+                            </div>
+                            <div class="skill-category">
+                                <h4>Backend</h4>
+                                <ul>
+                                    <li>Node.js</li>
+                                    <li>Python</li>
+                                    <li>PostgreSQL</li>
+                                    <li>MongoDB</li>
+                                </ul>
+                            </div>
+                            <div class="skill-category">
+                                <h4>Tools</h4>
+                                <ul>
+                                    <li>Git / GitHub</li>
+                                    <li>Docker</li>
+                                    <li>AWS</li>
+                                    <li>Figma</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section id="projects" class="content-section">
+                    <h2 style="margin-bottom: 30px; color: #667eea; font-size: 2rem;">My Projects</h2>
+                    <div class="project-grid">
+                        <div class="project-card">
+                            <h3>E-Commerce Platform</h3>
+                            <p>A full-stack e-commerce solution built with React and Node.js, featuring real-time inventory management, secure payment processing, and an intuitive admin dashboard.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React</span>
+                                <span class="project-tag">Node.js</span>
+                                <span class="project-tag">PostgreSQL</span>
+                                <span class="project-tag">Stripe</span>
+                            </div>
+                            <a href="#" class="project-link">View Project</a>
+                        </div>
+                        <div class="project-card">
+                            <h3>Task Management App</h3>
+                            <p>A collaborative project management tool with real-time updates, team collaboration features, and advanced reporting capabilities.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Vue.js</span>
+                                <span class="project-tag">Socket.io</span>
+                                <span class="project-tag">MongoDB</span>
+                                <span class="project-tag">Express</span>
+                            </div>
+                            <a href="#" class="project-link">View Project</a>
+                        </div>
+                        <div class="project-card">
+                            <h3>Weather Analytics Dashboard</h3>
+                            <p>A data visualization dashboard that provides comprehensive weather analytics with interactive charts and predictive modeling.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React</span>
+                                <span class="project-tag">D3.js</span>
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">FastAPI</span>
+                            </div>
+                            <a href="#" class="project-link">View Project</a>
+                        </div>
+                        <div class="project-card">
+                            <h3>Mobile Fitness App</h3>
+                            <p>A React Native application for fitness tracking with workout plans, progress monitoring, and social features for motivation.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React Native</span>
+                                <span class="project-tag">Firebase</span>
+                                <span class="project-tag">Redux</span>
+                                <span class="project-tag">GraphQL</span>
+                            </div>
+                            <a href="#" class="project-link">View Project</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Blog Section -->
+                <section id="blog" class="content-section">
+                    <h2 style="margin-bottom: 30px; color: #667eea; font-size: 2rem;">Latest Blog Posts</h2>
+                    <div class="blog-post">
+                        <h3>Building Scalable React Applications</h3>
+                        <div class="blog-meta">Published on December 15, 2024 • 8 min read</div>
+                        <p class="blog-excerpt">Learn how to structure large React applications for maintainability and scalability. This comprehensive guide covers component architecture, state management patterns, and performance optimization techniques.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                    <div class="blog-post">
+                        <h3>The Future of Web Development</h3>
+                        <div class="blog-meta">Published on December 10, 2024 • 6 min read</div>
+                        <p class="blog-excerpt">Exploring emerging trends in web development including WebAssembly, edge computing, and the next generation of JavaScript frameworks. What should developers focus on in 2025?</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                    <div class="blog-post">
+                        <h3>Mastering CSS Grid and Flexbox</h3>
+                        <div class="blog-meta">Published on December 5, 2024 • 10 min read</div>
+                        <p class="blog-excerpt">A deep dive into modern CSS layout techniques. Learn when to use Grid vs Flexbox, common patterns, and practical examples for creating responsive designs.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                    <div class="blog-post">
+                        <h3>API Design Best Practices</h3>
+                        <div class="blog-meta">Published on November 28, 2024 • 7 min read</div>
+                        <p class="blog-excerpt">Essential principles for designing RESTful APIs that are intuitive, scalable, and maintainable. Covering versioning, authentication, error handling, and documentation.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section id="contact" class="content-section">
+                    <h2 style="margin-bottom: 30px; color: #667eea; font-size: 2rem;">Get In Touch</h2>
+                    <div class="about-content">
+                        <p>I'm always interested in new opportunities and collaborations. Whether you have a project in mind, want to discuss technology, or just want to say hello, feel free to reach out!</p>
+                        <div class="social-links" style="justify-content: flex-start; margin-top: 30px;">
+                            <a href="mailto:your.email@example.com" class="social-link">📧 Email</a>
+                            <a href="https://linkedin.com/in/yourprofile" class="social-link">💼 LinkedIn</a>
+                            <a href="https://github.com/yourusername" class="social-link">🐱 GitHub</a>
+                            <a href="https://twitter.com/yourusername" class="social-link">🐦 Twitter</a>
+                        </div>
+                        <div style="margin-top: 40px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">Let's Build Something Amazing Together</h3>
+                            <p>I'm particularly interested in:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Full-stack web development projects</li>
+                                <li>Open-source contributions</li>
+                                <li>Technical writing and content creation</li>
+                                <li>Mentoring and knowledge sharing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navToggle = document.getElementById('navToggle');
+        const navPanel = document.getElementById('navPanel');
+        const navItems = document.querySelectorAll('.nav-item');
+        const contentSections = document.querySelectorAll('.content-section');
+        const breadcrumb = document.getElementById('breadcrumb');
+
+        // Toggle navigation panel
+        navToggle.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                navPanel.classList.toggle('open');
+            } else {
+                navPanel.classList.toggle('collapsed');
+            }
+        });
+
+        // Navigation item click handlers
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const section = item.dataset.section;
+                
+                // Update active nav item
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Update content section
+                contentSections.forEach(content => content.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+                
+                // Update breadcrumb
+                breadcrumb.textContent = item.querySelector('.nav-item-text').textContent;
+                
+                // Close mobile menu
+                if (window.innerWidth <= 768) {
+                    navPanel.classList.remove('open');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !navPanel.contains(e.target) && 
+                !navToggle.contains(e.target) &&
+                navPanel.classList.contains('open')) {
+                navPanel.classList.remove('open');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navPanel.classList.remove('open');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add search functionality
+        const searchBar = document.querySelector('.search-bar');
+        searchBar.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            // Simple search implementation - can be enhanced
+            if (searchTerm) {
+                console.log('Searching for:', searchTerm);
+                // Implement search logic here
+            }
+        });
+    </script>
+</body>
+</html>
