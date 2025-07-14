@@ -425,6 +425,133 @@
             padding: 5px 0;
         }
 
+        /* Experience and Education Sections */
+        .experience-section, .education-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .experience-section h2, .education-section h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .experience-section h2::before {
+            content: "💼";
+            font-size: 1.5rem;
+        }
+
+        .education-section h2::before {
+            content: "🎓";
+            font-size: 1.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 0px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(103, 126, 234, 0.3);
+        }
+
+        .timeline-date {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            background: rgba(103, 126, 234, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .timeline-content h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .timeline-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .achievements {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .achievements li {
+            color: #666;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .achievements li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            background: #5a6fd8;
+            transform: scale(1.2);
+            transition: all 0.3s ease;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-panel {
@@ -553,6 +680,94 @@
                                     <li>AWS</li>
                                     <li>Figma</li>
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div class="experience-section">
+                        <h2>Experience</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">2023 - Present</div>
+                                <div class="timeline-content">
+                                    <h3>Senior Full Stack Developer</h3>
+                                    <h4>Tech Solutions Inc.</h4>
+                                    <p>Lead development of scalable web applications using React, Node.js, and AWS. Mentor junior developers and collaborate with cross-functional teams to deliver high-quality products.</p>
+                                    <ul class="achievements">
+                                        <li>Architected and implemented microservices architecture reducing response time by 40%</li>
+                                        <li>Led a team of 5 developers in delivering 3 major product releases</li>
+                                        <li>Implemented CI/CD pipeline reducing deployment time from 2 hours to 15 minutes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2021 - 2023</div>
+                                <div class="timeline-content">
+                                    <h3>Full Stack Developer</h3>
+                                    <h4>Digital Innovation Co.</h4>
+                                    <p>Developed and maintained multiple client projects using modern web technologies. Focused on creating responsive, user-friendly interfaces and robust backend systems.</p>
+                                    <ul class="achievements">
+                                        <li>Built 15+ responsive web applications serving 10,000+ users</li>
+                                        <li>Improved application performance by 60% through code optimization</li>
+                                        <li>Collaborated with UX/UI team to implement design systems</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2020 - 2021</div>
+                                <div class="timeline-content">
+                                    <h3>Frontend Developer</h3>
+                                    <h4>StartupXYZ</h4>
+                                    <p>Specialized in React development and worked closely with the product team to create intuitive user interfaces. Contributed to the company's main product used by thousands of customers.</p>
+                                    <ul class="achievements">
+                                        <li>Developed responsive components used across 5 different applications</li>
+                                        <li>Implemented automated testing suite increasing code coverage to 85%</li>
+                                        <li>Mentored 2 junior developers in React best practices</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Section -->
+                    <div class="education-section">
+                        <h2>Education</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">2016 - 2020</div>
+                                <div class="timeline-content">
+                                    <h3>Bachelor of Science in Computer Science</h3>
+                                    <h4>University of Technology</h4>
+                                    <p>Graduated Magna Cum Laude with a focus on Software Engineering and Data Structures. Active member of the Computer Science Club and participated in multiple hackathons.</p>
+                                    <ul class="achievements">
+                                        <li>GPA: 3.8/4.0</li>
+                                        <li>Dean's List for 6 consecutive semesters</li>
+                                        <li>Winner of University Hackathon 2019</li>
+                                        <li>Relevant Coursework: Data Structures, Algorithms, Software Engineering, Database Systems</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2023</div>
+                                <div class="timeline-content">
+                                    <h3>AWS Certified Solutions Architect</h3>
+                                    <h4>Amazon Web Services</h4>
+                                    <p>Professional certification demonstrating expertise in designing distributed systems and applications on AWS platform.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2022</div>
+                                <div class="timeline-content">
+                                    <h3>Full Stack Web Development Bootcamp</h3>
+                                    <h4>TechBootcamp Academy</h4>
+                                    <p>Intensive 12-week program covering modern web development technologies and best practices.</p>
+                                    <ul class="achievements">
+                                        <li>Top 5% of graduating class</li>
+                                        <li>Built 10+ full-stack applications</li>
+                                        <li>Specialization in React, Node.js, and MongoDB</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
