@@ -552,6 +552,46 @@
             transition: all 0.3s ease;
         }
 
+        /* Loading Spinner */
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-spinner::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #667eea;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error State */
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-panel {
@@ -640,7 +680,7 @@
                 <!-- About Section -->
                 <section id="about" class="content-section active">
                     <div class="profile-header">
-                        <div class="profile-image">KS</div>
+                        <div class="profile-image">KCS</div>
                         <h1>Kishore Chandra Sahoo</h1>
                         <p>LLM | Gen AI | Data Science | AI | ML</p>
                         <div class="social-links">
@@ -684,93 +724,14 @@
                         </div>
                     </div>
 
-                    <!-- Experience Section -->
-                    <div class="experience-section">
-                        <h2>Experience</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-date">2023 - Present</div>
-                                <div class="timeline-content">
-                                    <a href="https://kishorecs.github.io/profile/exp/">
-                                    <h3>Senior Full Stack Developer</h3></a>
-                                    <h4>Tech Solutions Inc.</h4>
-                                    <p>Lead development of scalable web applications using React, Node.js, and AWS. Mentor junior developers and collaborate with cross-functional teams to deliver high-quality products.</p>
-                                    <ul class="achievements">
-                                        <li>Architected and implemented microservices architecture reducing response time by 40%</li>
-                                        <li>Led a team of 5 developers in delivering 3 major product releases</li>
-                                        <li>Implemented CI/CD pipeline reducing deployment time from 2 hours to 15 minutes</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-date">2021 - 2023</div>
-                                <div class="timeline-content">
-                                    <h3>Full Stack Developer</h3>
-                                    <h4>Digital Innovation Co.</h4>
-                                    <p>Developed and maintained multiple client projects using modern web technologies. Focused on creating responsive, user-friendly interfaces and robust backend systems.</p>
-                                    <ul class="achievements">
-                                        <li>Built 15+ responsive web applications serving 10,000+ users</li>
-                                        <li>Improved application performance by 60% through code optimization</li>
-                                        <li>Collaborated with UX/UI team to implement design systems</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-date">2020 - 2021</div>
-                                <div class="timeline-content">
-                                    <h3>Frontend Developer</h3>
-                                    <h4>StartupXYZ</h4>
-                                    <p>Specialized in React development and worked closely with the product team to create intuitive user interfaces. Contributed to the company's main product used by thousands of customers.</p>
-                                    <ul class="achievements">
-                                        <li>Developed responsive components used across 5 different applications</li>
-                                        <li>Implemented automated testing suite increasing code coverage to 85%</li>
-                                        <li>Mentored 2 junior developers in React best practices</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Experience Section Container -->
+                    <div id="experience-container">
+                        <div class="loading-spinner">Loading Experience...</div>
                     </div>
 
-                    <!-- Education Section -->
-                    <div class="education-section">
-                        <h2>Education</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-date">2016 - 2020</div>
-                                <div class="timeline-content">
-                                    <h3>Bachelor of Science in Computer Science</h3>
-                                    <h4>University of Technology</h4>
-                                    <p>Graduated Magna Cum Laude with a focus on Software Engineering and Data Structures. Active member of the Computer Science Club and participated in multiple hackathons.</p>
-                                    <ul class="achievements">
-                                        <li>GPA: 3.8/4.0</li>
-                                        <li>Dean's List for 6 consecutive semesters</li>
-                                        <li>Winner of University Hackathon 2019</li>
-                                        <li>Relevant Coursework: Data Structures, Algorithms, Software Engineering, Database Systems</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-date">2023</div>
-                                <div class="timeline-content">
-                                    <h3>AWS Certified Solutions Architect</h3>
-                                    <h4>Amazon Web Services</h4>
-                                    <p>Professional certification demonstrating expertise in designing distributed systems and applications on AWS platform.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-date">2022</div>
-                                <div class="timeline-content">
-                                    <h3>Full Stack Web Development Bootcamp</h3>
-                                    <h4>TechBootcamp Academy</h4>
-                                    <p>Intensive 12-week program covering modern web development technologies and best practices.</p>
-                                    <ul class="achievements">
-                                        <li>Top 5% of graduating class</li>
-                                        <li>Built 10+ full-stack applications</li>
-                                        <li>Specialization in React, Node.js, and MongoDB</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Education Section Container -->
+                    <div id="education-container">
+                        <div class="loading-spinner">Loading Education...</div>
                     </div>
                 </section>
 
@@ -960,6 +921,51 @@
                 console.log('Searching for:', searchTerm);
                 // Implement search logic here
             }
+        });
+
+        // Function to load external HTML content
+        async function loadHTMLContent(url, containerId) {
+            const container = document.getElementById(containerId);
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text();
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading content:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3>⚠️ Content Loading Error</h3>
+                        <p>Unable to load content from ${url}. Please check if the file exists and is accessible.</p>
+                        <p><strong>For GitHub Pages:</strong> Make sure the files are in the same repository.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Load external content when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load experience content
+            loadHTMLContent('experience.html', 'experience-container');
+            
+            // Load education content
+            loadHTMLContent('education.html', 'education-container');
+        });
+
+        // Refresh content when About section is clicked
+        navItems.forEach(item => {
+            const originalClickHandler = item.onclick;
+            item.addEventListener('click', () => {
+                const section = item.dataset.section;
+                
+                // If switching to about section, reload external content
+                if (section === 'about') {
+                    loadHTMLContent('experience.html', 'experience-container');
+                    loadHTMLContent('education.html', 'education-container');
+                }
+            });
         });
     </script>
 </body>
